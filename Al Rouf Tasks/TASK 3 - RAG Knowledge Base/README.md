@@ -1,5 +1,5 @@
 RAG Knowledge Base (AR/EN) — Single-file demo
-
+![Logo](FAISS.png)
 What this is
 - A compact single-file Python app (`main.py`) that ingests text files from `./docs`, chunks them, computes local embeddings with `sentence-transformers`, builds a FAISS index, and serves a minimal web UI (Flask) and CLI.
 - Supports Arabic and English queries and returns top-k cited passages (filename + chunk index).
@@ -55,3 +55,4 @@ If you want, I can:
 - Add a short test harness to validate queries programmatically.
 - Improve the web UI to show synthesized answers (if OpenAI key provided) inline.
 - Provide a small PowerShell script to automate setup.
+
