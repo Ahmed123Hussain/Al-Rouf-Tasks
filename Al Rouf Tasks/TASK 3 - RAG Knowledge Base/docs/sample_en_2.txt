@@ -1,0 +1,7 @@
+How to use the RAG KB
+
+This sample explains how to query the knowledge base. Use the web UI or CLI. Examples:
+- Rebuild index: click Rebuild or run `python main.py --rebuild`.
+- Query: type a question (English or Arabic) and press Query.
+
+Design notes: chunks are ~300 tokens with overlap 50. The system stores a preview of each chunk to show as citation context.

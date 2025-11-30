@@ -1,0 +1,8 @@
+Al Rouf Software
+
+Al Rouf is a fictional company used for demonstration. This document describes the mission: to provide simple, local RAG examples for testing. The system ingests text files, chunks them, computes embeddings, and stores them in a FAISS vector index for similarity search.
+
+Features:
+- Local embeddings using sentence-transformers
+- FAISS index (IndexFlatIP) with cosine similarity
+- Small web UI for querying and rebuilding the index

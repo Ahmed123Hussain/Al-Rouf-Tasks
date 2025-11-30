@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>RAG KB (AR/EN) - Single file</title>
+    <style>
+      body{font-family:Arial,Helvetica,sans-serif;margin:20px}
+      textarea{width:100%;height:100px}
+      pre{background:#f6f6f6;padding:10px}
+      .row{display:flex;gap:10px;margin-top:8px}
+    </style>
+  </head>
+  <body>
+    <h2>RAG Knowledge Base — Query (AR/EN)</h2>
+    <p>Type a question in Arabic or English and press Query. Rebuild ingests files from <code>./docs</code>.</p>
+    <textarea id="q" placeholder="Enter your question here..."></textarea>
+    <div class="row">
+      <button onclick="doQuery()">Query</button>
+      <button onclick="doRebuild()">Rebuild Index</button>
+      <label>k: <input id="k" type="number" value="3" min="1" style="width:60px"/></label>
+    </div>
+    <h3>Results</h3>
+    <div id="out"></div>
+
+    <script>
+    async function doRebuild(){
+      const out=document.getElementById('out'); out.innerText='Rebuilding index...';
+      const r=await fetch('/rebuild',{method:'POST'});
+      const j=await r.json();
+      out.innerText = 'Rebuild finished: ' + JSON.stringify(j);
+    }
+    async function doQuery(){
+      const q=document.getElementById('q').value; const k=document.getElementById('k').value;
+      if(!q){alert('Enter a query');return}
+      const out=document.getElementById('out'); out.innerText='Querying...';
+      const r=await fetch('/query',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:q,k:parseInt(k)})});
+      const j=await r.json();
+      let s='Detected language: '+j.lang+'\n\n';
+      j.results.forEach((r,i)=>{ s+=`${i+1}. ${r.source} (chunk ${r.chunk_idx}) — score ${r.score.toFixed(4)}\n"${r.text.slice(0,400)}"\n\n` });
+      out.innerText=s;
+    }
+    </script>
+  </body>
+</html>
